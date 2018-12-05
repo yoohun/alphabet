@@ -42,12 +42,12 @@ export default {
 @import '../../../assets/style/varibles.styl'
   .border-topbottom
     &:before
-      border-color: #ccc
+      border-color: #bababa
     &:after
-      border-color: #ccc
+      border-color: #bababa
   .border-bottom
     &:before
-      border-color: #ccc
+      border-color: #bababa
   .citylist
     position absolute
     top 1.44rem
@@ -56,13 +56,13 @@ export default {
     bottom 0
     overflow hidden
     .cityIndex
-      line-height .5rem
-      background #e0e0e0
-      color #000000
+      line-height .54rem
+      background #dfdfdf
+      color #4c4c4c
       padding 0 .2rem
-      font-size .32rem
+      font-size .3rem
     .cityName
       padding 0 .2rem
-      line-height .6rem
+      line-height .7rem
       font-size .3rem
 </style>

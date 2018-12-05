@@ -13,7 +13,8 @@ export default {
   data () {
     return {
       letterStatus: false,
-      startY: 0
+      startY: 0,
+      timer: null
     }
   },
   computed: {
@@ -31,17 +32,24 @@ export default {
     },
     letterStart () {
       this.letterStatus = true
+      this.$emit('status', true)
     },
     letterMove (e) {
       if (this.letterStatus) {
-        const startY = this.$refs['A'][0].offsetTop
-        const touchY = e.touches[0].clientY
-        const index = Math.floor((touchY - startY) / 18)
-        this.$emit('change', this.letters[index])
+        if (this.timer) {
+          clearTimeout(this.timer)
+        }
+        this.timer = setTimeout(() => {
+          const startY = this.$refs['A'][0].offsetTop
+          const touchY = e.touches[0].clientY
+          const index = Math.floor((touchY - startY) / 18)
+          this.$emit('change', this.letters[index])
+        }, 16)
       }
     },
     letterEnd () {
       this.letterStatus = false
+      this.$emit('status', false)
     }
   }
 }

@@ -3,7 +3,8 @@
     <cityheader></cityheader>
     <citysearch></citysearch>
     <citylist :cities="cities" :letter="letter"></citylist>
-    <alphabet :cities="cities" @change="changeLetter"></alphabet>
+    <alphabet :cities="cities" @change="changeLetter" @status="changeStatus"></alphabet>
+    <alphabetletter :letter="letter" :letterStatus="letterStatus"></alphabetletter>
   </div>
 </template>
 
@@ -12,20 +13,23 @@ import cityheader from './components/cityheader'
 import citysearch from './components/citysearch'
 import citylist from './components/citylist'
 import alphabet from './components/alphabet'
+import alphabetletter from './components/alphabetletter'
 import axios from 'axios'
 export default {
   name: 'city',
   data () {
     return {
       cities: {},
-      letter: ''
+      letter: '',
+      letterStatus: false
     }
   },
   components: {
     cityheader,
     citysearch,
     citylist,
-    alphabet
+    alphabet,
+    alphabetletter
   },
   methods: {
     getInfor () {
@@ -40,6 +44,9 @@ export default {
     },
     changeLetter (letter) {
       this.letter = letter
+    },
+    changeStatus (bool) {
+      this.letterStatus = bool
     }
   },
   mounted () {
