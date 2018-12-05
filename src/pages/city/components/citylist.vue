@@ -1,7 +1,7 @@
 <template>
   <div class="citylist" ref="wrapper">
     <div>
-      <div class="area" v-for="(item, key) of cities" :key="key">
+      <div class="area" v-for="(item, key) of cities" :key="key" :ref="key">
         <div class="cityIndex">{{key}}</div>
         <div class="cityName border-bottom" v-for="itemlist of item" :key="itemlist.id" @click="clickLetter(itemlist.name)">{{itemlist.name}}</div>
       </div>
@@ -14,7 +14,8 @@ import BScroll from 'better-scroll'
 export default {
   name: 'citylist',
   props: {
-    cities: Object
+    cities: Object,
+    letter: String
   },
   methods: {
     clickLetter (name) {
@@ -25,7 +26,14 @@ export default {
     this.scroll = new BScroll(this.$refs.wrapper, {
       click: true
     })
-    console.log(this.cities)
+  },
+  watch: {
+    letter () {
+      if (this.letter) {
+        const element = this.$refs[this.letter][0]
+        this.scroll.scrollToElement(element)
+      }
+    }
   }
 }
 </script>

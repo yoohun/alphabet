@@ -2,7 +2,8 @@
   <div>
     <cityheader></cityheader>
     <citysearch></citysearch>
-    <citylist :cities="cities"></citylist>
+    <citylist :cities="cities" :letter="letter"></citylist>
+    <alphabet :cities="cities" @change="changeLetter"></alphabet>
   </div>
 </template>
 
@@ -10,18 +11,21 @@
 import cityheader from './components/cityheader'
 import citysearch from './components/citysearch'
 import citylist from './components/citylist'
+import alphabet from './components/alphabet'
 import axios from 'axios'
 export default {
   name: 'city',
   data () {
     return {
-      cities: {}
+      cities: {},
+      letter: ''
     }
   },
   components: {
     cityheader,
     citysearch,
-    citylist
+    citylist,
+    alphabet
   },
   methods: {
     getInfor () {
@@ -33,6 +37,9 @@ export default {
       if (res.ret && res.data) {
         this.cities = res.data.cities
       }
+    },
+    changeLetter (letter) {
+      this.letter = letter
     }
   },
   mounted () {
