@@ -1,6 +1,6 @@
 <template>
   <ul class="list">
-    <li class="alphabetItem" v-for="(item, key) of cities" :key="key" @click="clickLetter(key)">{{key}}</li>
+    <li class="alphabetItem" v-for="item of letters" :key="item" :ref="item" @click="clickLetter(item)" @touchstart="letterStart" @touchmove="letterMove" @touchend="letterEnd">{{item}}</li>
   </ul>
 </template>
 
@@ -10,9 +10,38 @@ export default {
   props: {
     cities: Object
   },
+  data () {
+    return {
+      letterStatus: false,
+      startY: 0
+    }
+  },
+  computed: {
+    letters () {
+      const letters = []
+      for (let i in this.cities) {
+        letters.push(i)
+      }
+      return letters
+    }
+  },
   methods: {
     clickLetter (letter) {
       this.$emit('change', letter)
+    },
+    letterStart () {
+      this.letterStatus = true
+    },
+    letterMove (e) {
+      if (this.letterStatus) {
+        const startY = this.$refs['A'][0].offsetTop
+        const touchY = e.touches[0].clientY
+        const index = Math.floor((touchY - startY) / 18)
+        this.$emit('change', this.letters[index])
+      }
+    },
+    letterEnd () {
+      this.letterStatus = false
     }
   }
 }
@@ -24,7 +53,7 @@ export default {
   display flex
   flex-direction column
   justify-content center
-  position fixed
+  position absolute
   right 0
   top 0
   bottom 0
